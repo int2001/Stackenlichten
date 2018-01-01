@@ -2,6 +2,10 @@
  * Stackenlichten-Files I: The top plate
  *
  * kellertuer, 2017-02-19
+ * int2k, 2018-01-01 Added tolerances to the Centerfittings
+ *
+ * todo:
+ * rewrite (nice!) recursion with tolerances also added on sides
  */
 
 /*
@@ -9,6 +13,7 @@
  */
 wW = 4;    // Thickness/Width of wood
 mW = 4;    //                 of a Magnet-Cube
+tol = .15;  // Tolerances for the Fitting with the centerpiece
 fW = 2;    // Thickness of the front plastic plate
 sL = 80;   // sidelength of a triangle
 bD = 80;   // Depth of a box (depth w.r.t. frontview)
@@ -38,12 +43,12 @@ module SLside() {
   polygon(points=SidePointLine);
   // minus...
   translate([2*sL/nC,bD/2])
-    square(size = [mW,mW], center = true);
+    square(size = [mW+tol,mW+tol], center = true);
   translate([-2*sL/nC,bD/2])
-    square(size = [mW,mW], center = true);
+    square(size = [mW+tol,mW+tol], center = true);
   for (i = [1:fC]) {
     translate([-sL/2+2*i*sL/nC,3*bD/4])
-      square([sL/nC,wW], center = true);
+      square([sL/nC,wW+tol], center = true);
   };
     translate([0,bD,0]) scale([eW,2*wW])circle(d=1,$fn=360,center=true);
     translate([0,bD-wW]) square([wW,2*wW],center=true);
