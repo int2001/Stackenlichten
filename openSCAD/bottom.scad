@@ -2,11 +2,14 @@
  * Stackenlichten-Files I: The top plate
  *
  * kellertuer, 2017-02-19
+ * int2k, 2018-01-01    Added switchable holes
  */
 
 /*
  * Variables, all Data in mm
  */
+lower = false;  // Lower hole (Enable if you use the LED-Holder // Disable when you use WS2812-3M-Strips)
+upper = true;   
 wW = 4;    // Thickness/Width of wood
 mW = 4;    //                 of a Magnet-Cube
 fW = 2;    // Thickness of the front plastic plate
@@ -35,18 +38,22 @@ module bottomPlate() {
             genInnerSide(-120,[sL/4,sL*sqrt(3)/4],sH,sH),
             genInnerSide(120,[-sL/4,sL*sqrt(3)/4],sH,sH)
         ));
-    translate([0,sL*sqrt(3)/6+7]) hull() {
-        translate([-7.5+hR,-5+hR]) circle(r=hR,$fn=360);
-        translate([-7.5+hR, 5-hR]) circle(r=hR,$fn=360);
-        translate([ 7.5-hR,-5+hR]) circle(r=hR,$fn=360);
-        translate([ 7.5-hR, 5-hR]) circle(r=hR,$fn=360);
-       };
-    translate([0,sL*sqrt(3)/6-7]) hull() {
-        translate([-7.5+hR,-5+hR]) circle(r=hR,$fn=360);
-        translate([-7.5+hR, 5-hR]) circle(r=hR,$fn=360);
-        translate([ 7.5-hR,-5+hR]) circle(r=hR,$fn=360);
-        translate([ 7.5-hR, 5-hR]) circle(r=hR,$fn=360);
-    };
+        if (upper) {
+            translate([0,sL*sqrt(3)/6+7]) hull() {
+            translate([-7.5+hR,-5+hR]) circle(r=hR,$fn=360);
+            translate([-7.5+hR, 5-hR]) circle(r=hR,$fn=360);
+            translate([ 7.5-hR,-5+hR]) circle(r=hR,$fn=360);
+            translate([ 7.5-hR, 5-hR]) circle(r=hR,$fn=360);
+            };
+       }
+        if (lower) {
+            translate([0,sL*sqrt(3)/6-7]) hull() {
+            translate([-7.5+hR,-5+hR]) circle(r=hR,$fn=360);
+            translate([-7.5+hR, 5-hR]) circle(r=hR,$fn=360);
+            translate([ 7.5-hR,-5+hR]) circle(r=hR,$fn=360);
+            translate([ 7.5-hR, 5-hR]) circle(r=hR,$fn=360);
+            };
+        }
 };
 };
 

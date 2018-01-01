@@ -2,10 +2,7 @@
  * Stackenlichten-Files I: The top plate
  *
  * kellertuer, 2017-02-19
- * int2k, 2018-01-01 Added tolerances to the Centerfittings
- *
- * todo:
- * rewrite (nice!) recursion with tolerances also added on sides
+ * int2k, 2018-01-01 Added tolerances to the Centerfittings and also added on sides (fingers reduced by tolerance)
  */
 
 /*
@@ -51,7 +48,7 @@ module SLside() {
       square([sL/nC,wW+tol], center = true);
   };
     translate([0,bD,0]) scale([eW,2*wW])circle(d=1,$fn=360,center=true);
-    translate([0,bD-wW]) square([wW,2*wW],center=true);
+    translate([0,bD-(wW)]) square([wW+tol,2*(wW+tol)],center=true);
 }}
 
 
@@ -67,8 +64,8 @@ function generateSide(pL,i,a,v,sLe,sRi,h) = (i==fC) ? concat(pL,[rotM(a)*[(sL-sR
 function genDepth(a=0,v=[0,0],start=[0,0],h=wW) = generateDepth([start+v],0,a,v,h,start);
 function generateDepth(pL,i,a,v,h,start) = (i==fD) ? pL
     : generateDepth(concat(pL,[
-        rotM(a)*(start+[0,-(2*i+1)*bD/nD])+v, rotM(a)*(start+[h,-(2*i+1)*bD/nD])+v,
-        rotM(a)*(start+[h,-(2*i+2)*bD/nD])+v, rotM(a)*(start+[0,-(2*i+2)*bD/nD])+v
+        rotM(a)*(start+[0,-tol-(2*i+1)*bD/nD])+v, rotM(a)*(start+[h,-tol-(2*i+1)*bD/nD])+v,
+        rotM(a)*(start+[h,tol-(2*i+2)*bD/nD])+v, rotM(a)*(start+[0,tol-(2*i+2)*bD/nD])+v
         ]),i+1,a,v,h,start);
 /*
  * Small Helpers
